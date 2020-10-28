@@ -1,0 +1,16 @@
+<%- include("header") -%>
+
+<div>
+    <%= startingContent %>
+    <% for (let i = 0; i < postAdded.length; i++) {%>
+        <h3><%= postAdded[i]["newTitle"]%></h3>
+        <a href="/post/<%=i%>">lien</a>
+        <div>
+            <%= postAdded[i]["newText"]%>
+        </div>
+    <% } %>
+</div>
+
+<a href="/addPost"><button class="btn btn-primary">Ajouter un post</button></a>
+
+<%- include("footer") -%> 
