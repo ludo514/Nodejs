@@ -3,11 +3,12 @@ const http = require('http')
 const bodyParser = require('body-parser') 
 const app = express()
 
-
-
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/fruitsDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+mongoose.connect('mongodb://127.0.0.1:27017/fruitsDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
 app.set("view engine", "ejs")
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const fruitSchema = new mongoose.Schema({
     name: {
@@ -24,11 +25,19 @@ const fruitSchema = new mongoose.Schema({
 
 const peopleSchema = new mongoose.Schema({
     name: String,
-    age: Number
+    age: Number,
+    favotiteFruit: fruitSchema
 })
 
 const Fruit = mongoose.model("Fruit", fruitSchema)
 const People = mongoose.model("People", peopleSchema)
+
+const pruneau = new Fruit({
+    name: "Pruneau",
+    rating: 8,
+    review: "djlooklk"
+})
+
 const fruit = new Fruit({
     name: "Apple",
     rating: 7,
@@ -52,7 +61,13 @@ const people = new People({
     age: 37
 })
 
-//people.save()
+const michel = new People({
+    name: "Michel",
+    age: 10,
+    favotiteFruit: pruneau
+})
+
+
 /*Fruit.insertMany([kiwi, banana], function(err){
     if(err){
         console.log(err)
@@ -61,7 +76,37 @@ const people = new People({
     }
 })*/
 
-app.use(bodyParser.urlencoded({ extended: true }))
+/*Fruit.deleteOne({_id:"63c9b3edad9726396869d941"}, function(err) {
+    if(err){
+        console.log(err)
+    }else{
+        console.log("Deleted")
+    }
+})*/
+
+/*Fruit.deleteMany({name : "Kiwi"},function(err){
+    if(err){
+        console.lpg(err)
+    }else{
+        console.log("Tout les élements ont étaits suprimé")
+    }
+})*/
+
+People.updateOne({_id:"63c9b6a390163726ac8d858a"}, {favotiteFruit: banana}, function(err){
+    if(err){
+        console.log(err)
+    }else{
+        console.log("John bien mis à jour")
+    }
+})
+
+/*People.updateOne({_id: "63c9b6760588043864b23861"}, {name: "jack"}, function(err) {
+    if(err){
+        console.log(err)
+    }else{
+        console.log("Updated")
+    }
+})*/
 
 app.get("/", function(req, res){
 

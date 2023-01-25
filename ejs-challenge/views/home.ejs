@@ -1,12 +1,12 @@
 <%- include("header") -%>
 
 <div>
-    <%= startingContent %>
-    <% for (let i = 0; i < postAdded.length; i++) {%>
-        <h3><%= postAdded[i]["newTitle"]%></h3>
-        <a href="/post/<%=i%>">lien</a>
+    
+    <% for (let i = 0; i < blogNews.length; i++) {%>
+        <h3><%= blogNews[i].title%></h3>
+        <a href="/post/<%=blogNews[i]._id%>">lien</a>
         <div>
-            <%= postAdded[i]["newText"]%>
+            <%= blogNews[i].text%>
         </div>
     <% } %>
 </div>
